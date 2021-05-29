@@ -170,8 +170,8 @@ create_users() {
   # Create a nixbld group.
   echo "g $group -" >> /etc/sysusers.d/nix.conf
 
-  # Create 10 users
-  for i in $(seq 10); do
+  # Create 32 users
+  for i in $(seq 32); do
     local user=$group$i
     echo "u $user -" >> /etc/sysusers.d/nix.conf
     echo "m $user $group" >> /etc/sysusers.d/nix.conf
