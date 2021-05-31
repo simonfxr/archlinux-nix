@@ -10,6 +10,8 @@ dest=/nix
 
 nix_version=2.3.11
 
+distroid=$(. /etc/os-release && echo "$ID")
+
 case $(uname -m) in
   x86_64) system=x86_64-linux ;;
   i?86) system=i686-linux ;;
@@ -101,24 +103,24 @@ do_install() {
 
 install_sandbox() {
   local version=$1
-  mkdir -p $dest/var/nix/profiles/arch-system || exit 1
+  mkdir -p $dest/var/nix/profiles/${distroid}-system || exit 1
   NIX_REMOTE="" nix-build \
     --option build-use-sandbox false \
-    -o $dest/var/nix/profiles/arch-system/build-sandbox \
+    -o $dest/var/nix/profiles/${distroid}-system/build-sandbox \
     -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/$version.tar.gz \
-    -E "with import <nixpkgs> {}; buildEnv { name = \"arch-system-build-sandbox\"; paths = [ $sandbox_packages ]; }" || exit 1
+    -E "with import <nixpkgs> {}; buildEnv { name = \"${distroid}-system-build-sandbox\"; paths = [ $sandbox_packages ]; }" || exit 1
 }
 
 sandbox_exists() {
-  [ -d /nix/var/nix/profiles/arch-system/build-sandbox ]
+  [ -d /nix/var/nix/profiles/${distroid}-system/build-sandbox ]
 }
 
 delete_sandbox() {
-  rm -r /nix/var/nix/profiles/arch-system/build-sandbox
+  rm -r /nix/var/nix/profiles/${distroid}-system/build-sandbox
 }
 
 sandbox_path() {
-  readlink -f "/nix/var/nix/profiles/arch-system/build-sandbox/bin/$1"
+  readlink -f "/nix/var/nix/profiles/${distroid}-system/build-sandbox/bin/$1"
 }
 
 sandbox_paths() {
