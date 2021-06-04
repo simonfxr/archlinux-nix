@@ -179,14 +179,14 @@ create_users() {
     echo "m $user $group" >> /etc/sysusers.d/nix.conf
   done
 
-  systemctl restart systemd-sysusers.service
+  systemd-sysusers
 }
 
 delete_users() {
   local group=$1
 
   rm /etc/sysusers.d/nix.conf
-  systemctl restart systemd-sysusers.service
+  systemd-sysusers
 }
 
 delete_legacy_users() {
