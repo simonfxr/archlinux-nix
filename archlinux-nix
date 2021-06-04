@@ -2,13 +2,13 @@
 
 sandbox_binaries=""
 sandbox_packages="bash"
-default_nixos_version="21.05-beta"
+default_nixos_version="21.11"
 default_group="nixbld"
 conf_file=/etc/nix/nix.conf
 
 dest=/nix
 
-nix_version=2.3.11
+nix_version=2.5.1
 
 distroid=$(. /etc/os-release && echo "$ID")
 
